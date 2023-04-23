@@ -19,7 +19,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Author'
+                  $ref: '#/components/schemas/Agency'
           description: ''
     post:
       operationId: v1_agencies_create
@@ -29,13 +29,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Agency'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Agency'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Agency'
         required: true
       security:
       - basicAuth: []
@@ -46,7 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Agency'
           description: ''
   /api/v1/agencies/{id}/:
     get:
@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Agency'
           description: ''
     put:
       operationId: v1_agencies_update
@@ -86,13 +86,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Agency'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Agency'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: '#/components/schemas/Agency'
         required: true
       security:
       - basicAuth: []
@@ -103,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Agency'
           description: ''
     patch:
       operationId: v1_agencies_partial_update
@@ -120,13 +120,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedAuthor'
+              $ref: '#/components/schemas/PatchedAgency'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedAuthor'
+              $ref: '#/components/schemas/PatchedAgency'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedAuthor'
+              $ref: '#/components/schemas/PatchedAgency'
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -136,7 +136,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Agency'
           description: ''
     delete:
       operationId: v1_agencies_destroy
@@ -156,198 +156,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/authors/:
-    get:
-      operationId: v1_authors_list
-      tags:
-      - v1
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
-          description: ''
-    post:
-      operationId: v1_authors_create
-      tags:
-      - v1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Author'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Author'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Author'
-        required: true
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-          description: ''
-  /api/v1/authors/{id}/:
-    get:
-      operationId: v1_authors_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author.
-        required: true
-      tags:
-      - v1
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-          description: ''
-    put:
-      operationId: v1_authors_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author.
-        required: true
-      tags:
-      - v1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Author'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Author'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Author'
-        required: true
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-          description: ''
-    patch:
-      operationId: v1_authors_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author.
-        required: true
-      tags:
-      - v1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedAuthor'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedAuthor'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedAuthor'
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-          description: ''
-    delete:
-      operationId: v1_authors_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author.
-        required: true
-      tags:
-      - v1
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '204':
-          description: No response body
-  /api/v1/authors/{id}/token/:
-    get:
-      operationId: v1_authors_token_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author.
-        required: true
-      tags:
-      - v1
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-          description: ''
-  /api/v1/authors/social_networks/:
-    get:
-      operationId: v1_authors_social_networks_retrieve
-      tags:
-      - v1
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-          description: ''
   /api/v1/authors_social_networks/:
     get:
       operationId: v1_authors_social_networks_list
@@ -366,36 +174,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/AuthorSocialNetwork'
           description: ''
-    post:
-      operationId: v1_authors_social_networks_create
-      tags:
-      - v1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuthorSocialNetwork'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AuthorSocialNetwork'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AuthorSocialNetwork'
-        required: true
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthorSocialNetwork'
-          description: ''
   /api/v1/authors_social_networks/{id}/:
     get:
-      operationId: v1_authors_social_networks_retrieve_2
+      operationId: v1_authors_social_networks_retrieve
       parameters:
       - in: path
         name: id
@@ -416,94 +197,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthorSocialNetwork'
           description: ''
-    put:
-      operationId: v1_authors_social_networks_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author social network.
-        required: true
-      tags:
-      - v1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuthorSocialNetwork'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AuthorSocialNetwork'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AuthorSocialNetwork'
-        required: true
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthorSocialNetwork'
-          description: ''
-    patch:
-      operationId: v1_authors_social_networks_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author social network.
-        required: true
-      tags:
-      - v1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedAuthorSocialNetwork'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedAuthorSocialNetwork'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedAuthorSocialNetwork'
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthorSocialNetwork'
-          description: ''
-    delete:
-      operationId: v1_authors_social_networks_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this author social network.
-        required: true
-      tags:
-      - v1
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - {}
-      responses:
-        '204':
-          description: No response body
-  /api/v1/brands/:
+  /api/v1/brands_to_collaboration/:
     get:
-      operationId: v1_brands_retrieve
+      operationId: v1_brands_to_collaboration_list
       tags:
       - v1
       security:
@@ -512,21 +208,43 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BrandToCollaboration'
+          description: ''
     post:
-      operationId: v1_brands_create
+      operationId: v1_brands_to_collaboration_create
       tags:
       - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandToCollaboration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BrandToCollaboration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BrandToCollaboration'
+        required: true
       security:
       - basicAuth: []
       - cookieAuth: []
       - {}
       responses:
         '201':
-          description: No response body
-  /api/v1/brands/{id}/:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandToCollaboration'
+          description: ''
+  /api/v1/brands_to_collaboration/{id}/:
     get:
-      operationId: v1_brands_retrieve_2
+      operationId: v1_brands_to_collaboration_retrieve
       parameters:
       - in: path
         name: id
@@ -542,9 +260,13 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandToCollaboration'
+          description: ''
     put:
-      operationId: v1_brands_update
+      operationId: v1_brands_to_collaboration_update
       parameters:
       - in: path
         name: id
@@ -554,15 +276,31 @@ paths:
         required: true
       tags:
       - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandToCollaboration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BrandToCollaboration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BrandToCollaboration'
+        required: true
       security:
       - basicAuth: []
       - cookieAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandToCollaboration'
+          description: ''
     patch:
-      operationId: v1_brands_partial_update
+      operationId: v1_brands_to_collaboration_partial_update
       parameters:
       - in: path
         name: id
@@ -572,15 +310,30 @@ paths:
         required: true
       tags:
       - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBrandToCollaboration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBrandToCollaboration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBrandToCollaboration'
       security:
       - basicAuth: []
       - cookieAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandToCollaboration'
+          description: ''
     delete:
-      operationId: v1_brands_destroy
+      operationId: v1_brands_to_collaboration_destroy
       parameters:
       - in: path
         name: id
@@ -642,6 +395,159 @@ paths:
               schema:
                 $ref: '#/components/schemas/EarlyAccessRequest'
           description: ''
+  /api/v1/tags/:
+    get:
+      operationId: v1_tags_list
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+          description: ''
+    post:
+      operationId: v1_tags_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+  /api/v1/tags/{id}/:
+    get:
+      operationId: v1_tags_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tag.
+        required: true
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+    put:
+      operationId: v1_tags_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tag.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+    patch:
+      operationId: v1_tags_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tag.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTag'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+    delete:
+      operationId: v1_tags_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tag.
+        required: true
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/v1/users/:
     get:
       operationId: v1_users_list
@@ -695,7 +601,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this user.
+        description: A unique integer value identifying this profile.
         required: true
       tags:
       - v1
@@ -717,7 +623,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this user.
+        description: A unique integer value identifying this profile.
         required: true
       tags:
       - v1
@@ -751,7 +657,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this user.
+        description: A unique integer value identifying this profile.
         required: true
       tags:
       - v1
@@ -784,7 +690,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this user.
+        description: A unique integer value identifying this profile.
         required: true
       tags:
       - v1
@@ -795,106 +701,91 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/users/{id}/social_networks/:
+    get:
+      operationId: v1_users_social_networks_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorSocialNetwork'
+          description: ''
+  /api/v1/users/{id}/token/:
+    get:
+      operationId: v1_users_token_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
 components:
   schemas:
-    Author:
+    Agency:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        created_at:
+        website:
           type: string
-          format: date-time
-          readOnly: true
-        avatar:
+        social_network_link:
           type: string
-          format: uri
-          nullable: true
         name:
           type: string
-          nullable: true
-          maxLength: 255
-        nickname:
+        position:
+          type: string
+        phone:
+          type: string
+        comment:
           type: string
           nullable: true
-          maxLength: 255
-        ticker:
-          type: string
-          nullable: true
-          maxLength: 255
-        celebrity_type:
-          type: string
-          nullable: true
-          maxLength: 128
-        record_type:
-          type: string
-          nullable: true
-          maxLength: 3
-        reach:
+        social_network:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        reach_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        engagement:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        engagement_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        location:
-          type: string
-          nullable: true
-        age:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-          maxLength: 144
-        email_contacts:
-          type: string
-          format: email
-          nullable: true
-          maxLength: 254
-        phone_contacts:
-          type: string
-          nullable: true
-        is_approved:
-          type: boolean
-        user:
-          type: integer
-        category:
-          type: array
-          items:
-            type: integer
-            nullable: true
-        tags:
-          type: array
-          items:
-            type: integer
-            nullable: true
       required:
-      - created_at
       - id
-      - user
+      - name
+      - phone
+      - position
+      - social_network
+      - social_network_link
+      - website
     AuthorSocialNetwork:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        link:
+          type: string
         subscribers_count:
           type: integer
           maximum: 2147483647
@@ -924,19 +815,70 @@ components:
           type: boolean
         is_approved_stage_2:
           type: boolean
-        name:
+        social_network_name:
           type: integer
         author:
           type: integer
-        brands:
-          type: array
-          items:
-            type: integer
       required:
       - author
-      - brands
+      - id
+      - link
+      - social_network_name
+    BrandAffiliation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        brand_name:
+          type: string
+        icon:
+          type: string
+          format: uri
+          nullable: true
+      required:
+      - brand_name
+      - id
+    BrandToCollaboration:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        website:
+          type: string
+        social_network_link:
+          type: string
+        name:
+          type: string
+        position:
+          type: string
+        phone:
+          type: string
+        comment:
+          type: string
+          nullable: true
+        social_network:
+          type: integer
+      required:
       - id
       - name
+      - phone
+      - position
+      - social_network
+      - social_network_link
+      - website
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category_name:
+          type: string
+      required:
+      - category_name
+      - id
     EarlyAccessRequest:
       type: object
       properties:
@@ -966,12 +908,81 @@ components:
       - id
       - phone
       - social_network_link
-    PatchedAuthor:
+    PatchedAgency:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        website:
+          type: string
+        social_network_link:
+          type: string
+        name:
+          type: string
+        position:
+          type: string
+        phone:
+          type: string
+        comment:
+          type: string
+          nullable: true
+        social_network:
+          type: integer
+    PatchedBrandToCollaboration:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        website:
+          type: string
+        social_network_link:
+          type: string
+        name:
+          type: string
+        position:
+          type: string
+        phone:
+          type: string
+        comment:
+          type: string
+          nullable: true
+        social_network:
+          type: integer
+    PatchedTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        tag_name:
+          type: string
+          maxLength: 155
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          readOnly: true
+        brand_affiliation:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrandAffiliation'
+          readOnly: true
+        category:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          readOnly: true
+        reach_balance:
+          type: number
+          format: double
         created_at:
           type: string
           format: date-time
@@ -980,14 +991,30 @@ components:
           type: string
           format: uri
           nullable: true
-        name:
+        full_name:
           type: string
           nullable: true
           maxLength: 255
-        nickname:
+        personal_username:
           type: string
           nullable: true
           maxLength: 255
+        phone:
+          type: string
+          nullable: true
+          maxLength: 15
+        wallet_address:
+          type: string
+          nullable: true
+          maxLength: 128
+        language:
+          type: string
+          nullable: true
+          maxLength: 2
+        theme_type:
+          type: boolean
+        is_author:
+          type: boolean
         ticker:
           type: string
           nullable: true
@@ -1044,28 +1071,92 @@ components:
           type: boolean
         user:
           type: integer
-        category:
-          type: array
-          items:
-            type: integer
-            nullable: true
-        tags:
-          type: array
-          items:
-            type: integer
-            nullable: true
-    PatchedAuthorSocialNetwork:
+    Tag:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        subscribers_count:
+        tag_name:
+          type: string
+          maxLength: 155
+      required:
+      - id
+      - tag_name
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          readOnly: true
+        brand_affiliation:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrandAffiliation'
+          readOnly: true
+        category:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          readOnly: true
+        reach_balance:
+          type: number
+          format: double
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        full_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        personal_username:
+          type: string
+          nullable: true
+          maxLength: 255
+        phone:
+          type: string
+          nullable: true
+          maxLength: 15
+        wallet_address:
+          type: string
+          nullable: true
+          maxLength: 128
+        language:
+          type: string
+          nullable: true
+          maxLength: 2
+        theme_type:
+          type: boolean
+        is_author:
+          type: boolean
+        ticker:
+          type: string
+          nullable: true
+          maxLength: 255
+        celebrity_type:
+          type: string
+          nullable: true
+          maxLength: 128
+        record_type:
+          type: string
+          nullable: true
+          maxLength: 3
+        reach:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        subscribers_count_growth:
+        reach_growth:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
@@ -1080,143 +1171,37 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        posts_per_day:
+        location:
+          type: string
+          nullable: true
+        age:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        is_approved_stage_1:
-          type: boolean
-        is_approved_stage_2:
-          type: boolean
-        name:
-          type: integer
-        author:
-          type: integer
-        brands:
-          type: array
-          items:
-            type: integer
-    PatchedUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        password:
+        bio:
           type: string
-          maxLength: 128
-        last_login:
-          type: string
-          format: date-time
           nullable: true
-        is_superuser:
-          type: boolean
-          title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
-        username:
-          type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
-          pattern: ^[\w.@+-]+$
-          maxLength: 150
-        first_name:
-          type: string
-          maxLength: 150
-        last_name:
-          type: string
-          maxLength: 150
-        email:
+          maxLength: 144
+        email_contacts:
           type: string
           format: email
-          title: Email address
-          maxLength: 254
-        is_staff:
-          type: boolean
-          title: Staff status
-          description: Designates whether the user can log into this admin site.
-        is_active:
-          type: boolean
-          title: Active
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
-        date_joined:
-          type: string
-          format: date-time
-        groups:
-          type: array
-          items:
-            type: integer
-          description: The groups this user belongs to. A user will get all permissions
-            granted to each of their groups.
-        user_permissions:
-          type: array
-          items:
-            type: integer
-          description: Specific permissions for this user.
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        password:
-          type: string
-          maxLength: 128
-        last_login:
-          type: string
-          format: date-time
           nullable: true
-        is_superuser:
-          type: boolean
-          title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
-        username:
-          type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
-          pattern: ^[\w.@+-]+$
-          maxLength: 150
-        first_name:
-          type: string
-          maxLength: 150
-        last_name:
-          type: string
-          maxLength: 150
-        email:
-          type: string
-          format: email
-          title: Email address
           maxLength: 254
-        is_staff:
-          type: boolean
-          title: Staff status
-          description: Designates whether the user can log into this admin site.
-        is_active:
-          type: boolean
-          title: Active
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
-        date_joined:
+        phone_contacts:
           type: string
-          format: date-time
-        groups:
-          type: array
-          items:
-            type: integer
-          description: The groups this user belongs to. A user will get all permissions
-            granted to each of their groups.
-        user_permissions:
-          type: array
-          items:
-            type: integer
-          description: Specific permissions for this user.
+          nullable: true
+        is_approved:
+          type: boolean
+        user:
+          type: integer
       required:
+      - brand_affiliation
+      - category
+      - created_at
       - id
-      - password
-      - username
+      - tags
+      - user
   securitySchemes:
     basicAuth:
       type: http
