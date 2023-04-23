@@ -1,7 +1,8 @@
 openapi: 3.0.3
 info:
   title: SOEX
-  version: 0.0.1
+  description: test
+  version: 0.0.2
 paths:
   /api/v1/agencies/:
     get:
@@ -548,6 +549,47 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/token/:
+    get:
+      operationId: v1_token_list
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Token'
+          description: ''
+  /api/v1/token/{id}/:
+    get:
+      operationId: v1_token_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this token.
+        required: true
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
   /api/v1/users/:
     get:
       operationId: v1_users_list
@@ -722,7 +764,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthorSocialNetwork'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorSocialNetwork'
           description: ''
   /api/v1/users/{id}/token/:
     get:
@@ -1083,6 +1127,50 @@ components:
       required:
       - id
       - tag_name
+    Token:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        smart_contract_address:
+          type: string
+        to_sale:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sold:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        buy_limit:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        price:
+          type: number
+          format: double
+        market_cap:
+          type: number
+          format: double
+        discount_price:
+          type: number
+          format: double
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        author:
+          type: integer
+      required:
+      - author
+      - created_at
+      - id
+      - market_cap
+      - price
+      - smart_contract_address
     User:
       type: object
       properties:
