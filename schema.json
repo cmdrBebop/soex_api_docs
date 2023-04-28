@@ -1,8 +1,7 @@
 openapi: 3.0.3
 info:
   title: SOEX
-  description: test
-  version: 0.0.2
+  version: 0.0.3
 paths:
   /api/v1/agencies/:
     get:
@@ -157,6 +156,47 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/authors/:
+    get:
+      operationId: v1_authors_list
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+          description: ''
+  /api/v1/authors/{id}/:
+    get:
+      operationId: v1_authors_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - v1
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+          description: ''
   /api/v1/authors_social_networks/:
     get:
       operationId: v1_authors_social_networks_list
@@ -822,20 +862,134 @@ components:
       - social_network
       - social_network_link
       - website
+    Author:
+      type: object
+      properties:
+        user:
+          type: integer
+        reach_balance:
+          type: number
+          format: double
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        full_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        personal_username:
+          type: string
+          nullable: true
+          maxLength: 255
+        phone:
+          type: string
+          nullable: true
+          maxLength: 15
+        wallet_address:
+          type: string
+          nullable: true
+          maxLength: 128
+        language:
+          type: string
+          nullable: true
+          maxLength: 2
+        theme_type:
+          type: boolean
+        is_author:
+          type: boolean
+        ticker:
+          type: string
+          nullable: true
+          maxLength: 255
+        celebrity_type:
+          type: string
+          nullable: true
+          maxLength: 128
+        record_type:
+          type: string
+          nullable: true
+          maxLength: 3
+        reach:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        reach_growth:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        engagement:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        engagement_growth:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        location:
+          type: string
+          nullable: true
+        age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+          maxLength: 144
+        email_contacts:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        phone_contacts:
+          type: string
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          readOnly: true
+        brand_affiliation:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrandAffiliation'
+          readOnly: true
+        is_approved:
+          type: boolean
+        social_networks:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorSocialNetwork'
+          readOnly: true
+      required:
+      - brand_affiliation
+      - created_at
+      - social_networks
+      - tags
+      - user
     AuthorSocialNetwork:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        social_network_name:
+          allOf:
+          - $ref: '#/components/schemas/SocialNetworkType'
+          readOnly: true
         link:
           type: string
         subscribers_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        subscribers_count_growth:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
@@ -859,8 +1013,6 @@ components:
           type: boolean
         is_approved_stage_2:
           type: boolean
-        social_network_name:
-          type: integer
         author:
           type: integer
       required:
@@ -912,17 +1064,6 @@ components:
       - social_network
       - social_network_link
       - website
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        category_name:
-          type: string
-      required:
-      - category_name
-      - id
     EarlyAccessRequest:
       type: object
       properties:
@@ -945,11 +1086,15 @@ components:
           maxLength: 255
         is_sent:
           type: boolean
+          readOnly: true
         is_active:
           type: boolean
+          readOnly: true
       required:
       - email
       - id
+      - is_active
+      - is_sent
       - phone
       - social_network_link
     PatchedAgency:
@@ -1018,11 +1163,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BrandAffiliation'
-          readOnly: true
-        category:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
           readOnly: true
         reach_balance:
           type: number
@@ -1115,6 +1255,17 @@ components:
           type: boolean
         user:
           type: integer
+    SocialNetworkType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        social_network_name:
+          type: string
+      required:
+      - id
+      - social_network_name
     Tag:
       type: object
       properties:
@@ -1186,11 +1337,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BrandAffiliation'
-          readOnly: true
-        category:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
           readOnly: true
         reach_balance:
           type: number
@@ -1285,7 +1431,6 @@ components:
           type: integer
       required:
       - brand_affiliation
-      - category
       - created_at
       - id
       - tags
