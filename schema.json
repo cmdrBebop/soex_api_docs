@@ -1,14 +1,161 @@
 openapi: 3.0.3
 info:
   title: SOEX
-  version: 0.0.3
+  version: 0.0.4
 paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/v1/agencies/:
     get:
-      operationId: v1_agencies_list
+      operationId: api_v1_agencies_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -22,9 +169,9 @@ paths:
                   $ref: '#/components/schemas/Agency'
           description: ''
     post:
-      operationId: v1_agencies_create
+      operationId: api_v1_agencies_create
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -38,6 +185,7 @@ paths:
               $ref: '#/components/schemas/Agency'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -50,17 +198,18 @@ paths:
           description: ''
   /api/v1/agencies/{id}/:
     get:
-      operationId: v1_agencies_retrieve
+      operationId: api_v1_agencies_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this agency.
+        description: A unique integer value identifying this Агенство.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -72,16 +221,16 @@ paths:
                 $ref: '#/components/schemas/Agency'
           description: ''
     put:
-      operationId: v1_agencies_update
+      operationId: api_v1_agencies_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this agency.
+        description: A unique integer value identifying this Агенство.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -95,6 +244,7 @@ paths:
               $ref: '#/components/schemas/Agency'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -106,16 +256,16 @@ paths:
                 $ref: '#/components/schemas/Agency'
           description: ''
     patch:
-      operationId: v1_agencies_partial_update
+      operationId: api_v1_agencies_partial_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this agency.
+        description: A unique integer value identifying this Агенство.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -128,6 +278,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedAgency'
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -139,29 +290,196 @@ paths:
                 $ref: '#/components/schemas/Agency'
           description: ''
     delete:
-      operationId: v1_agencies_destroy
+      operationId: api_v1_agencies_destroy
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this agency.
+        description: A unique integer value identifying this Агенство.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
       responses:
         '204':
           description: No response body
-  /api/v1/authors/:
+  /api/v1/auth/users/:
     get:
-      operationId: v1_authors_list
+      operationId: api_v1_auth_users_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: api_v1_auth_users_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+  /api/v1/auth/users/{id}/:
+    get:
+      operationId: api_v1_auth_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: api_v1_auth_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: api_v1_auth_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: api_v1_auth_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/auth/users/activation/:
+    post:
+      operationId: api_v1_auth_users_activation_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activation'
+        required: true
+      security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -170,23 +488,332 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Activation'
+          description: ''
+  /api/v1/auth/users/me/:
+    get:
+      operationId: api_v1_auth_users_me_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: api_v1_auth_users_me_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: api_v1_auth_users_me_partial_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: api_v1_auth_users_me_destroy
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/auth/users/resend_activation/:
+    post:
+      operationId: api_v1_auth_users_resend_activation_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/auth/users/reset_password/:
+    post:
+      operationId: api_v1_auth_users_reset_password_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/auth/users/reset_password_confirm/:
+    post:
+      operationId: api_v1_auth_users_reset_password_confirm_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+          description: ''
+  /api/v1/auth/users/reset_username/:
+    post:
+      operationId: api_v1_auth_users_reset_username_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/auth/users/reset_username_confirm/:
+    post:
+      operationId: api_v1_auth_users_reset_username_confirm_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameResetConfirm'
+          description: ''
+  /api/v1/auth/users/set_password/:
+    post:
+      operationId: api_v1_auth_users_set_password_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetPassword'
+          description: ''
+  /api/v1/auth/users/set_username/:
+    post:
+      operationId: api_v1_auth_users_set_username_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUsername'
+          description: ''
+  /api/v1/authors/:
+    get:
+      operationId: api_v1_authors_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAuthorList'
           description: ''
   /api/v1/authors/{id}/:
     get:
-      operationId: v1_authors_retrieve
+      operationId: api_v1_authors_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -197,12 +824,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/Author'
           description: ''
+  /api/v1/authors/{id}/social_networks/:
+    get:
+      operationId: api_v1_authors_social_networks_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Профиль.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorSocialNetwork'
+          description: ''
   /api/v1/authors_social_networks/:
     get:
-      operationId: v1_authors_social_networks_list
+      operationId: api_v1_authors_social_networks_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -217,17 +871,18 @@ paths:
           description: ''
   /api/v1/authors_social_networks/{id}/:
     get:
-      operationId: v1_authors_social_networks_retrieve
+      operationId: api_v1_authors_social_networks_retrieve_2
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this author social network.
+        description: A unique integer value identifying this Социальная сеть у автора.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -238,12 +893,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthorSocialNetwork'
           description: ''
+  /api/v1/bonus_program/:
+    get:
+      operationId: api_v1_bonus_program_list
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BonusProgramRequest'
+          description: ''
+    post:
+      operationId: api_v1_bonus_program_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BonusProgramRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BonusProgramRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BonusProgramRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BonusProgramRequest'
+          description: ''
   /api/v1/brands_to_collaboration/:
     get:
-      operationId: v1_brands_to_collaboration_list
+      operationId: api_v1_brands_to_collaboration_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -257,9 +960,9 @@ paths:
                   $ref: '#/components/schemas/BrandToCollaboration'
           description: ''
     post:
-      operationId: v1_brands_to_collaboration_create
+      operationId: api_v1_brands_to_collaboration_create
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -273,6 +976,7 @@ paths:
               $ref: '#/components/schemas/BrandToCollaboration'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -285,17 +989,18 @@ paths:
           description: ''
   /api/v1/brands_to_collaboration/{id}/:
     get:
-      operationId: v1_brands_to_collaboration_retrieve
+      operationId: api_v1_brands_to_collaboration_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this brand to collaboration.
+        description: A unique integer value identifying this Бренд для коллаборации.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -307,16 +1012,16 @@ paths:
                 $ref: '#/components/schemas/BrandToCollaboration'
           description: ''
     put:
-      operationId: v1_brands_to_collaboration_update
+      operationId: api_v1_brands_to_collaboration_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this brand to collaboration.
+        description: A unique integer value identifying this Бренд для коллаборации.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -330,6 +1035,7 @@ paths:
               $ref: '#/components/schemas/BrandToCollaboration'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -341,16 +1047,16 @@ paths:
                 $ref: '#/components/schemas/BrandToCollaboration'
           description: ''
     patch:
-      operationId: v1_brands_to_collaboration_partial_update
+      operationId: api_v1_brands_to_collaboration_partial_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this brand to collaboration.
+        description: A unique integer value identifying this Бренд для коллаборации.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -363,6 +1069,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBrandToCollaboration'
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -374,29 +1081,44 @@ paths:
                 $ref: '#/components/schemas/BrandToCollaboration'
           description: ''
     delete:
-      operationId: v1_brands_to_collaboration_destroy
+      operationId: api_v1_brands_to_collaboration_destroy
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this brand to collaboration.
+        description: A unique integer value identifying this Бренд для коллаборации.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
       responses:
         '204':
           description: No response body
+  /api/v1/calc/:
+    get:
+      operationId: api_v1_calc_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
   /api/v1/early_access/:
     get:
-      operationId: v1_early_access_list
+      operationId: api_v1_early_access_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -410,9 +1132,9 @@ paths:
                   $ref: '#/components/schemas/EarlyAccessRequest'
           description: ''
     post:
-      operationId: v1_early_access_create
+      operationId: api_v1_early_access_create
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -426,6 +1148,7 @@ paths:
               $ref: '#/components/schemas/EarlyAccessRequest'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -438,10 +1161,11 @@ paths:
           description: ''
   /api/v1/tags/:
     get:
-      operationId: v1_tags_list
+      operationId: api_v1_tags_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -455,9 +1179,9 @@ paths:
                   $ref: '#/components/schemas/Tag'
           description: ''
     post:
-      operationId: v1_tags_create
+      operationId: api_v1_tags_create
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -471,6 +1195,7 @@ paths:
               $ref: '#/components/schemas/Tag'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -483,17 +1208,18 @@ paths:
           description: ''
   /api/v1/tags/{id}/:
     get:
-      operationId: v1_tags_retrieve
+      operationId: api_v1_tags_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this tag.
+        description: A unique integer value identifying this Тег.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -505,16 +1231,16 @@ paths:
                 $ref: '#/components/schemas/Tag'
           description: ''
     put:
-      operationId: v1_tags_update
+      operationId: api_v1_tags_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this tag.
+        description: A unique integer value identifying this Тег.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -528,6 +1254,7 @@ paths:
               $ref: '#/components/schemas/Tag'
         required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -539,16 +1266,16 @@ paths:
                 $ref: '#/components/schemas/Tag'
           description: ''
     patch:
-      operationId: v1_tags_partial_update
+      operationId: api_v1_tags_partial_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this tag.
+        description: A unique integer value identifying this Тег.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -561,6 +1288,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedTag'
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -572,17 +1300,18 @@ paths:
                 $ref: '#/components/schemas/Tag'
           description: ''
     delete:
-      operationId: v1_tags_destroy
+      operationId: api_v1_tags_destroy
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this tag.
+        description: A unique integer value identifying this Тег.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -591,10 +1320,11 @@ paths:
           description: No response body
   /api/v1/token/:
     get:
-      operationId: v1_token_list
+      operationId: api_v1_token_list
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -607,19 +1337,47 @@ paths:
                 items:
                   $ref: '#/components/schemas/Token'
           description: ''
+    post:
+      operationId: api_v1_token_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Token'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Token'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
   /api/v1/token/{id}/:
     get:
-      operationId: v1_token_retrieve
+      operationId: api_v1_token_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this token.
+        description: A unique integer value identifying this Токен.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -630,12 +1388,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/Token'
           description: ''
-  /api/v1/users/:
-    get:
-      operationId: v1_users_list
+    put:
+      operationId: api_v1_token_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Токен.
+        required: true
       tags:
-      - v1
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Token'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Token'
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -644,14 +1420,95 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Token'
+          description: ''
+    patch:
+      operationId: api_v1_token_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Токен.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedToken'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedToken'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
+    delete:
+      operationId: api_v1_token_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Токен.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/:
+    get:
+      operationId: api_v1_users_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
           description: ''
     post:
-      operationId: v1_users_create
+      operationId: api_v1_users_create
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -663,8 +1520,8 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/User'
-        required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -677,17 +1534,18 @@ paths:
           description: ''
   /api/v1/users/{id}/:
     get:
-      operationId: v1_users_retrieve
+      operationId: api_v1_users_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -699,16 +1557,16 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     put:
-      operationId: v1_users_update
+      operationId: api_v1_users_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -720,8 +1578,8 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/User'
-        required: true
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -733,16 +1591,16 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     patch:
-      operationId: v1_users_partial_update
+      operationId: api_v1_users_partial_update
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       requestBody:
         content:
           application/json:
@@ -755,6 +1613,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUser'
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -766,17 +1625,18 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     delete:
-      operationId: v1_users_destroy
+      operationId: api_v1_users_destroy
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -785,17 +1645,18 @@ paths:
           description: No response body
   /api/v1/users/{id}/social_networks/:
     get:
-      operationId: v1_users_social_networks_retrieve
+      operationId: api_v1_users_social_networks_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -810,17 +1671,18 @@ paths:
           description: ''
   /api/v1/users/{id}/token/:
     get:
-      operationId: v1_users_token_retrieve
+      operationId: api_v1_users_token_retrieve
       parameters:
       - in: path
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this profile.
+        description: A unique integer value identifying this Профиль.
         required: true
       tags:
-      - v1
+      - api
       security:
+      - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - {}
@@ -831,8 +1693,73 @@ paths:
               schema:
                 $ref: '#/components/schemas/Token'
           description: ''
+  /api/v1/verify/:
+    post:
+      operationId: api_v1_verify_create
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          description: No response body
+  /auth/token/login/:
+    post:
+      operationId: auth_token_login_create
+      description: Use this endpoint to obtain user authentication token.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreate'
+          description: ''
+  /auth/token/logout/:
+    post:
+      operationId: auth_token_logout_create
+      description: Use this endpoint to logout user (remove user authentication token).
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          description: No response body
 components:
   schemas:
+    Activation:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - token
+      - uid
     Agency:
       type: object
       properties:
@@ -920,9 +1847,8 @@ components:
           minimum: -2147483648
           nullable: true
         reach_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: number
+          format: double
           nullable: true
         engagement:
           type: integer
@@ -930,9 +1856,8 @@ components:
           minimum: -2147483648
           nullable: true
         engagement_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: number
+          format: double
           nullable: true
         location:
           type: string
@@ -971,11 +1896,16 @@ components:
           items:
             $ref: '#/components/schemas/AuthorSocialNetwork'
           readOnly: true
+        token:
+          allOf:
+          - $ref: '#/components/schemas/Token'
+          readOnly: true
       required:
       - brand_affiliation
       - created_at
       - social_networks
       - tags
+      - token
       - user
     AuthorSocialNetwork:
       type: object
@@ -994,31 +1924,68 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+        subscribers_count_growth:
+          type: number
+          format: double
+          nullable: true
         engagement:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
         engagement_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: number
+          format: double
           nullable: true
         posts_per_day:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: number
+          format: double
           nullable: true
         is_approved_stage_1:
           type: boolean
         is_approved_stage_2:
           type: boolean
+        prove_link:
+          type: string
+          nullable: true
         author:
           type: integer
       required:
       - author
       - id
       - link
+      - social_network_name
+    BonusProgramRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        social_network_link:
+          type: string
+          maxLength: 255
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 15
+        comment:
+          type: string
+          nullable: true
+          maxLength: 255
+        is_sent:
+          type: boolean
+        is_active:
+          type: boolean
+        social_network_name:
+          type: integer
+      required:
+      - email
+      - id
+      - phone
+      - social_network_link
       - social_network_name
     BrandAffiliation:
       type: object
@@ -1090,6 +2057,8 @@ components:
         is_active:
           type: boolean
           readOnly: true
+        social_network_name:
+          type: integer
       required:
       - email
       - id
@@ -1097,6 +2066,60 @@ components:
       - is_sent
       - phone
       - social_network_link
+      - social_network_name
+    PaginatedAuthorList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
+    PaginatedUserList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PasswordResetConfirm:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+        new_password:
+          type: string
+      required:
+      - new_password
+      - token
+      - uid
     PatchedAgency:
       type: object
       properties:
@@ -1148,113 +2171,116 @@ components:
         tag_name:
           type: string
           maxLength: 155
-    PatchedUser:
+    PatchedToken:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
+        smart_contract_address:
+          type: string
           readOnly: true
-        brand_affiliation:
-          type: array
-          items:
-            $ref: '#/components/schemas/BrandAffiliation'
-          readOnly: true
-        reach_balance:
+        to_sale:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sold:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        buy_limit:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        price:
           type: number
           format: double
+          readOnly: true
+        price_growth:
+          type: number
+          format: double
+        market_cap:
+          type: number
+          format: double
+          readOnly: true
+        market_cap_growth:
+          type: number
+          format: double
+        discount_amount:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        discount_price:
+          type: number
+          format: double
+          nullable: true
         created_at:
           type: string
           format: date-time
           readOnly: true
-        avatar:
+        image:
           type: string
           format: uri
           nullable: true
-        full_name:
+        spt_name:
           type: string
           nullable: true
-          maxLength: 255
-        personal_username:
+        stage:
           type: string
-          nullable: true
-          maxLength: 255
-        phone:
-          type: string
-          nullable: true
-          maxLength: 15
-        wallet_address:
-          type: string
-          nullable: true
-          maxLength: 128
-        language:
-          type: string
-          nullable: true
-          maxLength: 2
-        theme_type:
-          type: boolean
-        is_author:
-          type: boolean
-        ticker:
-          type: string
-          nullable: true
-          maxLength: 255
-        celebrity_type:
-          type: string
-          nullable: true
-          maxLength: 128
-        record_type:
-          type: string
-          nullable: true
-          maxLength: 3
-        reach:
+        author:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        reach_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        engagement:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        engagement_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        location:
-          type: string
-          nullable: true
-        age:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-          maxLength: 144
-        email_contacts:
+          readOnly: true
+    PatchedUser:
+      type: object
+      properties:
+        email:
           type: string
           format: email
-          nullable: true
+          title: Email address
           maxLength: 254
-        phone_contacts:
-          type: string
-          nullable: true
-        is_approved:
-          type: boolean
-        user:
+        id:
           type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+    SendEmailReset:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    SetPassword:
+      type: object
+      properties:
+        new_password:
+          type: string
+        current_password:
+          type: string
+      required:
+      - current_password
+      - new_password
+    SetUsername:
+      type: object
+      properties:
+        current_password:
+          type: string
+        new_username:
+          type: string
+          title: Username
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+      required:
+      - current_password
+      - new_username
     SocialNetworkType:
       type: object
       properties:
@@ -1286,6 +2312,7 @@ components:
           readOnly: true
         smart_contract_address:
           type: string
+          readOnly: true
         to_sale:
           type: integer
           maximum: 2147483647
@@ -1302,9 +2329,22 @@ components:
         price:
           type: number
           format: double
+          readOnly: true
+        price_growth:
+          type: number
+          format: double
         market_cap:
           type: number
           format: double
+          readOnly: true
+        market_cap_growth:
+          type: number
+          format: double
+        discount_amount:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
         discount_price:
           type: number
           format: double
@@ -1313,8 +2353,18 @@ components:
           type: string
           format: date-time
           readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+        spt_name:
+          type: string
+          nullable: true
+        stage:
+          type: string
         author:
           type: integer
+          readOnly: true
       required:
       - author
       - created_at
@@ -1322,119 +2372,68 @@ components:
       - market_cap
       - price
       - smart_contract_address
+    TokenCreate:
+      type: object
+      properties:
+        password:
+          type: string
+        username:
+          type: string
     User:
       type: object
       properties:
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
         id:
           type: integer
           readOnly: true
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
+        username:
+          type: string
           readOnly: true
-        brand_affiliation:
-          type: array
-          items:
-            $ref: '#/components/schemas/BrandAffiliation'
-          readOnly: true
-        reach_balance:
-          type: number
-          format: double
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        avatar:
-          type: string
-          format: uri
-          nullable: true
-        full_name:
-          type: string
-          nullable: true
-          maxLength: 255
-        personal_username:
-          type: string
-          nullable: true
-          maxLength: 255
-        phone:
-          type: string
-          nullable: true
-          maxLength: 15
-        wallet_address:
-          type: string
-          nullable: true
-          maxLength: 128
-        language:
-          type: string
-          nullable: true
-          maxLength: 2
-        theme_type:
-          type: boolean
-        is_author:
-          type: boolean
-        ticker:
-          type: string
-          nullable: true
-          maxLength: 255
-        celebrity_type:
-          type: string
-          nullable: true
-          maxLength: 128
-        record_type:
-          type: string
-          nullable: true
-          maxLength: 3
-        reach:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        reach_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        engagement:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        engagement_growth:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        location:
-          type: string
-          nullable: true
-        age:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-          maxLength: 144
-        email_contacts:
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+      required:
+      - id
+      - username
+    UserCreate:
+      type: object
+      properties:
+        email:
           type: string
           format: email
-          nullable: true
+          title: Email address
           maxLength: 254
-        phone_contacts:
+        username:
           type: string
-          nullable: true
-        is_approved:
-          type: boolean
-        user:
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        id:
           type: integer
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
       required:
-      - brand_affiliation
-      - created_at
       - id
-      - tags
-      - user
+      - password
+      - username
+    UsernameResetConfirm:
+      type: object
+      properties:
+        new_username:
+          type: string
+          title: Username
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+      required:
+      - new_username
   securitySchemes:
     basicAuth:
       type: http
@@ -1443,3 +2442,8 @@ components:
       type: apiKey
       in: cookie
       name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
